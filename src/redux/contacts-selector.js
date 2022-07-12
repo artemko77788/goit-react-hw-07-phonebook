@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useGetContactsQuery } from './contactSlise';
 
 export const useFulter = () => {
-  const [filter, setFilter] = useState('');
   const { data, error, isLoading } = useGetContactsQuery();
-
+  const filter = useSelector(state => state.filter.value);
   const filteredDataByName = useMemo(
     () =>
       data?.filter(
@@ -12,5 +12,5 @@ export const useFulter = () => {
       ),
     [data, filter]
   );
-  return { error, filter, setFilter, isLoading, filteredDataByName, data };
+  return { error, filter, isLoading, filteredDataByName, data };
 };
