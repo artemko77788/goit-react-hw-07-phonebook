@@ -1,5 +1,6 @@
 .list {
   position: relative;
+  width: 400px;
 }
 
 .item {
@@ -22,6 +23,11 @@
   fill: rgb(69, 69, 69);
   transform: rotate(180deg);
   margin-right: 10px;
-
   right: 5px;
+}
+
+.spiner {
+  position: absolute;
+  right: 20%;
+  top: 300px;
 }

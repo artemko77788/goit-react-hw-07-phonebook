@@ -32,3 +32,8 @@
 .label {
   font-size: 20px;
 }
+
+.errorMasage {
+  font-size: 12px;
+  color: red;
+}

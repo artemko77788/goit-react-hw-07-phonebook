@@ -1,19 +1,19 @@
-import { useDispatch } from 'react-redux';
+import { DebounceInput } from 'react-debounce-input';
 import s from './Filter.module.css';
-import { filterUsers } from '../../redux/todoSlice';
 
-function Filter() {
-  const handleInputChange = e => {
-    dispatch(filterUsers(e.currentTarget.value));
-  };
-
-  const dispatch = useDispatch();
-
+function Filter({ value, onChange }) {
   return (
     <form>
       <label className={s.label}>
         Find contacts by name
-        <input type="text" onChange={handleInputChange} className={s.input} />
+        <DebounceInput
+          type="text"
+          minLength={2}
+          debounceTimeout={300}
+          onChange={e => onChange(e.target.value)}
+          value={value}
+          className={s.input}
+        />
       </label>
     </form>
   );
