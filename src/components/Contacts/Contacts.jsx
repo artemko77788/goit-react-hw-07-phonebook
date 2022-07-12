@@ -2,30 +2,20 @@ import PropTypes from 'prop-types';
 import { GrBasket } from 'react-icons/gr';
 import { BiArrowBack } from 'react-icons/bi';
 import s from './Contacts.module.css';
-
-import {
-  useDeleteContactMutation,
-  useGetContactsQuery,
-} from 'redux/contactSlise';
-
+import { useDeleteContactMutation } from 'redux/contactSlise';
 import { SpinnerRoundOutlined } from 'spinners-react';
-
 import Filter from 'components/Filter';
-import { useState, useMemo } from 'react';
+import { useFulter } from 'redux/contacts-selector';
 
 const Contacts = () => {
-  const [filter, setFilter] = useState('');
-  const { data, error, isLoading } = useGetContactsQuery();
   const [deleteUser, result] = useDeleteContactMutation();
-
-  const filteredDataByName = useMemo(
-    () =>
-      data?.filter(
-        ({ name }) => name.toLowerCase().startsWith(filter.toLowerCase()) ?? []
-      ),
-    [data, filter]
-  );
-
+  const {
+    error,
+    filter,
+    setFilter,
+    isLoading,
+    filteredDataByName,
+  } = useFulter();
   return (
     <div>
       {<Filter value={filter} onChange={setFilter} />}

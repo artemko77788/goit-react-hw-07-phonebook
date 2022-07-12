@@ -1,14 +1,16 @@
-import { createSelector } from '@reduxjs/toolkit';
-import { getContacts, getFilter } from './getTodos';
+import { useMemo, useState } from 'react';
+import { useGetContactsQuery } from './contactSlise';
 
-export const filteredContacts = createSelector(
-  getContacts,
-  getFilter,
+export const useFulter = () => {
+  const [filter, setFilter] = useState('');
+  const { data, error, isLoading } = useGetContactsQuery();
 
-  (contacts, filterValue) => {
-    console.log(contacts);
-    return contacts.filter(({ name }) =>
-      name.toLowerCase().startsWith(filterValue)
-    );
-  }
-);
+  const filteredDataByName = useMemo(
+    () =>
+      data?.filter(
+        ({ name }) => name.toLowerCase().startsWith(filter.toLowerCase()) ?? []
+      ),
+    [data, filter]
+  );
+  return { error, filter, setFilter, isLoading, filteredDataByName, data };
+};
