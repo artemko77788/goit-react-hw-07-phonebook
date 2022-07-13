@@ -2,30 +2,38 @@ import PropTypes from 'prop-types';
 import { GrBasket } from 'react-icons/gr';
 import { BiArrowBack } from 'react-icons/bi';
 import s from './Contacts.module.css';
-import { useDeleteContactMutation } from 'redux/contactSlise';
+import {
+  useDeleteContactMutation,
+  useGetContactsQuery,
+} from 'redux/contactSlise';
 import { SpinnerRoundOutlined } from 'spinners-react';
 import Filter from 'components/Filter';
-import { useFulter } from 'redux/contacts-selector';
+import { filteredContacts, getFilter } from 'redux/contactsSelectors';
+import { useSelector } from 'react-redux';
 
 const Contacts = () => {
   const [deleteUser, result] = useDeleteContactMutation();
-  const {
-    error,
-    filter,
-    setFilter,
-    isLoading,
-    filteredDataByName,
-  } = useFulter();
+  const filter = useSelector(getFilter);
+  const { error, filteredData, isLoading } = useGetContactsQuery(undefined, {
+    selectFromResult(result) {
+      return {
+        ...result,
+        filteredData: filteredContacts(result, filter),
+      };
+    },
+  });
+
+  // console.log(xxx);
   return (
     <div>
-      {<Filter value={filter} onChange={setFilter} />}
+      {<Filter />}
       {error && <p>Somesing wrong</p>}
 
       {isLoading || result.isLoading ? (
         <SpinnerRoundOutlined className={s.spiner} />
       ) : (
         <ul className={s.list}>
-          {filteredDataByName.map(({ name, id, number }) => {
+          {filteredData?.map(({ name, id, number }) => {
             return (
               <li key={id} className={s.item}>
                 <span>{name}</span>: <span>{number}</span>
