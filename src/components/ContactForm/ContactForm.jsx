@@ -1,7 +1,7 @@
 import s from './ContactForm.module.css';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { useAddContactMutation, useGetContactsQuery } from 'redux/contactSlise';
+import { useAddContactMutation, useGetContactsQuery } from 'redux/api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

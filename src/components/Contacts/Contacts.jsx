@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
+import Filter from 'components/Filter';
 import { GrBasket } from 'react-icons/gr';
 import { BiArrowBack } from 'react-icons/bi';
-import s from './Contacts.module.css';
-import {
-  useDeleteContactMutation,
-  useGetContactsQuery,
-} from 'redux/contactSlise';
+import { useDeleteContactMutation, useGetContactsQuery } from 'redux/api';
 import { SpinnerRoundOutlined } from 'spinners-react';
-import Filter from 'components/Filter';
 import { filteredContacts, getFilter } from 'redux/contactsSelectors';
 import { useSelector } from 'react-redux';
+import s from './Contacts.module.css';
 
 const Contacts = () => {
   const [deleteUser, result] = useDeleteContactMutation();
@@ -23,7 +20,6 @@ const Contacts = () => {
     },
   });
 
-  // console.log(xxx);
   return (
     <div>
       {<Filter />}
